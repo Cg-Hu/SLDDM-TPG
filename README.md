@@ -17,12 +17,12 @@
 
 <!-- <img src="assets/framework_1.jpg" alt="framework_1.jpg" style="display: block; margin: auto;zoom: 15%;" width="650px"/> -->
 
-<img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto; zoom: 50%;" width="500px"/>
+<img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto; zoom: 10%;" width="100px"/>
 
 SLDDM-TPG Framework
 
 <!-- <img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="700px"/> -->
-<img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:75%;"/>
+<img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:80%;"/>
 The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
 ​                                                                                                   
 
@@ -170,7 +170,7 @@ To further validate content accuracy, GPT-4 was used to generate descriptive pro
 <img src="assets/image3.png" alt="image.png" style="display: block; margin: auto;zoom: 50%;"/>
 
 <!-- <img src="assets/image4.png" alt="image.png" style="display: block; margin: auto;zoom: 50%;" width="600px"/> -->
-<img src="assets/image4.png" alt="image.png" style="display: block; margin: auto;zoom: 50%;"/>
+<img src="assets/image4.png" alt="image.png" style="display: block; margin: auto;zoom: 60%;"/>
 
 ### Limitation and badcases
 
