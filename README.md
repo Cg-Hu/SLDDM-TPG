@@ -10,7 +10,7 @@
 
 ## **🎞 Compared Cases**
 
-<img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" />
+<img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" width="1200px"/>
 
 ## **🔧️ Framework**
 
