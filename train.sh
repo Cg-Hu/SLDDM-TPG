@@ -1,0 +1,1 @@
+python -u main.py --logdir logs/106 --pretrained_model "" --base config/slddm512.yaml --scale_lr False

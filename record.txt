@@ -1,0 +1,7 @@
+1. 绘制损失曲线：
+/home/hcg/cloth_pattern/sim_diff_diffusion_106/ldm/models/diffusion/ddpm.py -> training_step()
+直接p_losses计算损失时, 想需要保存的损失曲线, 需要加入到log_dict字典中
+2. 采样图像保存:
+/home/hcg/cloth_pattern/sim_diff_diffusion_106/ldm/models/diffusion/ddpm.py -> LatentTryOnDiffusion -> log_images
+3. 获取batch数据
+/home/hcg/cloth_pattern/sim_diff_diffusion_106/ldm/models/diffusion/ddpm.py -> LatentTryOnDiffusion -> get_input
