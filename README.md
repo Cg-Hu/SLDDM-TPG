@@ -17,7 +17,7 @@
 
 <!-- <img src="assets/framework_1.jpg" alt="framework_1.jpg" style="display: block; margin: auto;zoom: 15%;" width="650px"/> -->
 
-<img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto;" width="850px"/>
+<img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto;" width="830px"/>
 SLDDM-TPG Framework
 
 <!-- <img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="700px"/> -->
