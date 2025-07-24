@@ -17,19 +17,16 @@
 
 <!-- <img src="assets/framework_1.jpg" alt="framework_1.jpg" style="display: block; margin: auto;zoom: 15%;" width="650px"/> -->
 
-<img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto; zoom: 40%;"/>
-
+<img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto;" width="250px"/>
 SLDDM-TPG Framework
 
 <!-- <img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="700px"/> -->
 <img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:80%;"/>
 The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
-​                                                                                                   
-
+​                                                                  
 <!-- <img src="assets/image1.png" alt="image.png" style="display: block; margin: auto;zoom: 30%;" width="300px"/> -->
 <img src="assets/image1.png" alt="image.png" style="display: block; margin: auto;zoom: 50%;"/>
-
-​                                                                                                  The detailed network architecture of SATs.
+The detailed network architecture of SATs.
 
 
 
