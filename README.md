@@ -18,13 +18,15 @@
 
 ​                                                                                                                   SLDDM-TPG Framework
 
+<img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="500px"/>
+The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
+​                                                                                                   
+
 <img src="assets/image1.png" alt="image.png" style="display: block; margin: auto;zoom: 30%;" width="300px"/>
 
-​                                                                                                  The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
+​                                                                                                  The detailed network architecture of SATs.
 
-<img src="assets/image2.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="350px"/>
 
-​                                                                                                   The detailed network architecture of SATs.
 
 **Explanation of the three features obtained by decoupling the LDN network**
 
