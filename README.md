@@ -10,7 +10,7 @@
 
 ## **🎞 Compared Cases**
 
-<img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" width="500px"/>
+<img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" width="600px"/>
 
 ## **🔧️ Framework**
 
@@ -81,7 +81,7 @@ data
 
 For cloth_mask, you can use SCHP segmentation to get the corresponding clothing image segmentation result.  Somple samples of our CTP-HD dataset as follows:
 
-<img src="assets/CTP-HD.jpg" alt="CTP-HD.jpg" style="display: block; margin: auto;zoom: 40%;" width="500px"/>
+<img src="assets/CTP-HD.jpg" alt="CTP-HD.jpg" style="display: block; margin: auto;zoom: 40%;" width="450px"/>
 
 ### **Training for Stage1: LDN**
 
@@ -165,4 +165,4 @@ To further validate content accuracy, GPT-4 was used to generate descriptive pro
 
 While our SLDDM-TPG outperforms other methods in generating faithful and high-quality textile pattern images conditioned on clothing images, it still struggles with complex patterns or low-quality, small-area reference clothing images, as shown in the figure below. This may be because there are not enough complex samples in our training data or because our model's disentangled ability does not perform well on complex samples.
 
-<img src="assets/image5.png" alt="image.png" style="display: block; margin: auto;zoom: 40%;" width="600px"/>
+<img src="assets/image5.png" alt="image.png" style="display: block; margin: auto;zoom: 40%;" width="400px"/>
