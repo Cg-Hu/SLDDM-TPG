@@ -10,7 +10,7 @@
 
 ## **🎞 Compared Cases**
 
-<img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" width="650px"/>
+<img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" width="700px"/>
 
 ## **🔧️ Framework**
 
@@ -18,7 +18,7 @@
 
 ​                                                                                                                   SLDDM-TPG Framework
 
-<img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="500px"/>
+<img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="600px"/>
 The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
 ​                                                                                                   
 
