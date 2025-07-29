@@ -18,20 +18,28 @@
 <!-- <img src="assets/framework_1.jpg" alt="framework_1.jpg" style="display: block; margin: auto;zoom: 15%;" width="650px"/> -->
 
 <img src="assets/framework_1.jpg" alt="framework_1.jpg.jpg" style="display: block; margin: auto;" width="900px"/>
-SLDDM-TPG Framework
+<div style="text-align: center;">
+  (1) SLDDM-TPG Framework
+</div>
 
 <!-- <img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:50%;" width="700px"/> -->
 <img src="assets/image.png" alt="image.png" style="display: block; margin: auto;zoom:80%;"/>
-The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
-​                                                                  
+
+<div style="text-align: center;">
+  (2) The details of LDN. (a) SCM. (b) RAM.  (c) SATs.
+</div>
+
 <!-- <img src="assets/image1.png" alt="image.png" style="display: block; margin: auto;zoom: 30%;" width="300px"/> -->
 <img src="assets/image1.png" alt="image.png" style="display: block; margin: auto;zoom: 50%;"/>
-The detailed network architecture of SATs.
 
+<div style="text-align: center;">
+  (3) The detailed network architecture of SATs.
+</div>
 
+<p></p>
+<p></p>
 
 **Explanation of the three features obtained by decoupling the LDN network**
-
 1. **$f^c_S$ : textile pattern content feature in clothing image  $(C)$.**
 *Note: textile pattern content feature indicates that $C$ and $P$ share common content features, such as pattern details, etc.*
 2. **$f^c_T:$ texture defect feature in clothing image $(C)$.**
