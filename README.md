@@ -11,7 +11,7 @@
 ## **🎞 Compared Cases**
 
 <!-- <img src="assets/more_results.jpg" alt="more_results_00.jpg" style="display: block; margin: auto; zoom: 35%;" width="700px"/> -->
-<img src="assets/more_results.png" alt="more_results.png" style="display: block; margin: auto; zoom: 100%;"/>
+<img src="assets/more_results.png" alt="more_results.png" style="display: block; margin: auto;" width="500px"/>
 
 ## **🔧️ Framework**
 
