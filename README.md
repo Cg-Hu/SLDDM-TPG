@@ -182,4 +182,4 @@ Although our method neither achieves the fastest inference nor the minimal param
 While our SLDDM-TPG outperforms other methods in generating faithful and high-quality textile pattern images conditioned on clothing images, it still struggles with complex patterns or low-quality, small-area reference clothing images, as shown in the figure below. This may be because there are not enough complex samples in our training data or because our model's disentangled ability does not perform well on complex samples.
 
 <!-- <img src="assets/image5.png" alt="image.png" style="display: block; margin: auto;zoom: 40%;" width="400px"/> -->
-<img src="assets/image5.png" alt="image.png" style="display: block; margin: auto;zoom: 50%;"/>
+<img src="assets/badcases.png" alt="badcases.png" style="display: block; margin: auto;zoom: 50%;"/>
