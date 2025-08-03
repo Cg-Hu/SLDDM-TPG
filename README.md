@@ -1,4 +1,4 @@
-# **Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation**
+# **Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation**（SLDDM-TPG）
 
 ## **🕮 Title Description**
 
