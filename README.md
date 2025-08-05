@@ -97,7 +97,7 @@ data
 For cloth_mask, you can use SCHP segmentation to get the corresponding clothing image segmentation result.  Somple samples of our CTP-HD dataset as follows:
 
 <!-- <img src="assets/CTP-HD.jpg" alt="CTP-HD.jpg" style="display: block; margin: auto;zoom: 40%;" width="450px"/> -->
-<img src="assets/CTP-HD.jpg" alt="CTP-HD.jpg" style="display: block; margin: auto;zoom: 50%;"/>
+<img src="assets/CTP-HD.jpg" alt="CTP-HD" style="display: block; margin: auto;zoom: 50%;"/>
 
 ### **Training for Stage1: LDN**
 
