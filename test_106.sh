@@ -6,6 +6,6 @@ python test.py --gpu_id 0 \
 --ckpt /nfs5/hcg/repository/cloth_pattern_512/logs/2025-04-10T20:36:22_slddm512_pretrianed_save_complete_data/checkpoints/epoch=000394.ckpt \
 --n_samples 4 \
 --seed 23 \
---scale 1 \
+--scale 7.5 \
 --H 512 \
 --W 512 \

@@ -10,6 +10,6 @@ CUDA_VISIBLE_DEVICES=0,1 python main_sd.py \
   --learning-rate 1e-4 \
   --final-lr 1e-6 \
   --fix-pred-lr \
-  --batch-size 32 \
+  --batch-size 16 \
   --accumulate_steps 8 \
   /nfs5/hcg/datasets/CTP-HD

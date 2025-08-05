@@ -6,6 +6,6 @@ CUDA_VISIBLE_DEVICES=0,1,2,3 python test_mutil_gpu.py \
 --ckpt /nfs5/hcg/repository/cloth_pattern_512/logs/2025-06-10T20:36:22_slddm512_pretrianed_save_complete_data/checkpoints/epoch=000394.ckpt \
 --n_samples 4 \
 --seed 23 \
---scale 1 \
+--scale 7.5 \
 --H 512 \
 --W 512 \

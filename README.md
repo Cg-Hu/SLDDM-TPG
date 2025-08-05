@@ -75,16 +75,19 @@ For the downloaded data, we recommend storing it in three hierarchical directori
 ```python
 data
 |-- cloth
+|   |-- A0000.png
 |   |-- A0001.png
 |   |-- A0002.png
 |   |-- A0003.png
 |   |-- ...
 |-- cloth_mask
+|   |-- A0000.png
 |   |-- A0001.png
 |   |-- A0002.png
 |   |-- A0003.png
 |   |-- ...
 |-- pattern
+|   |-- A0000.png
 |   |-- A0001.png
 |   |-- A0002.png
 |   |-- A0003.png
@@ -113,7 +116,7 @@ CUDA_VISIBLE_DEVICES=<set usable cuda index, such as 0,1> python main_sd.py \
   --learning-rate 1e-4 \
   --final-lr 1e-6 \
   --fix-pred-lr \
-  --batch-size 32 \
+  --batch-size 16 \
   --accumulate_steps 8 \
   <add your dataroot_path, such as /home/name/ctp_hd_data>
 ```
