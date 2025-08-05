@@ -6,7 +6,7 @@
 
 **Disentangled**: Due to the non-rigid nature of clothing images, texture defects—such as *deformations*, *blurriness*, and *occlusions*—as well as artifacts introduced by natural photography, often lead to feature confusion (feature entanglement). Therefore, it is essential to disentangle the feature representations of clothing images.
 
-**Semi-supervised**: We construct the CTP-HD dataset, which contains both labeled and unlabeled samples, where the labels correspond to ground-truth textile pattern images. To enable semi-supervised learning, we introduce novel modules and training strategies, such as alignment process, CLS module, STD loss and so on, that extend the original latent diffusion model.
+**Semi-supervised**: We construct the CTP-HD dataset, which contains both labeled and unlabeled samples, where the labels correspond to ground-truth textile pattern images. To enhance generation quality through better utilization of unlabeled data, we introduce a semi-supervised training framework that extends the original latent diffusion model with novel components such as an alignment process, the CLS module, and STD loss.
 
 ## **🎞 Compared Cases**
 
