@@ -183,4 +183,4 @@ As shown in Tab. \ref{tab:efficiency}, we conduct an inference time and the numb
 While our SLDDM-TPG outperforms other baselines and can generate faithful and high-quality pattern images based on clothing images, it still struggles with extracting accurate representations of complex content patterns from reference clothing images, especially the low-quality, small-area images, as shown in Figure below. This may be because there are not enough complex samples in our training data or because our model's disentangled ability does not perform well on complex samples. In future work, we plan to expand our labeled dataset and optimize the integration of disentangled features into the diffusion model for better fine-tuning to get more complex content generation from clothing images.
 
 <!-- <img src="assets/image5.png" alt="image.png" style="display: block; margin: auto;zoom: 40%;" width="400px"/> -->
-<img src="assets/badcases.png" alt="badcases.png" style="display: block; margin: auto;zoom: 50%;"/>
+<img src="assets/badcases.jpg" alt="badcases.png" style="display: block; margin: auto;zoom: 50%;"/>
