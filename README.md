@@ -154,7 +154,7 @@ python test.py --gpu_id 0 \
 --ckpt <Directory of ckpt obtained through training>
 --n_samples 4 \
 --seed 23 \
---scale 1 \
+--scale 7.5 \
 --H 512 \
 --W 512 \
 ```
