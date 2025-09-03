@@ -15,7 +15,7 @@
 
 ## **🔧️ Framework**
 
-<img src="assets/framework.jpg" alt="framework.jpg" style="display: block; margin: auto;" width="700px"/>
+<img src="assets/framework.jpg" alt="framework.jpg" style="display: block; margin: auto;" width="750px"/>
 <div style="text-align: center;">
   (1) SLDDM-TPG Framework
 </div>
