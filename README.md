@@ -2,7 +2,10 @@
 
 ## **Framework**
 Our method targets generation of pattern images from clothing images (TPG) and consists of two stages: (1) a latent disentangled network (LDN); (2) a semi-supervised latent diffusion model (S-LDM).
-<img src="./assets/framework.jpg" alt="framework_1.jpg" style="display: block; margin: auto;zoom: 11%;" />
+<div align="center">
+  <img src="./assets/framework.jpg" alt="framework" width="70%">
+</div>
+
                          
 
 
@@ -27,8 +30,9 @@ We use SimSiam (original model: resnet18, is public) as our LDN's SCM model, and
 ### **Download the Dataset**
 
 Our CTP-HD dataset will be made public soon. Some cases are shown below.
-<img src="assets/CTP-HD.jpg" alt="CTP-HD.jpg" style="display: block; margin: auto;zoom: 40%;" />
-
+<div align="center">
+  <img src="assets/CTP-HD.jpg" alt="framework" width="50%">
+</div>
 VITON-HD data is publicly available and you can obtain and download it.
 
 For the downloaded data, we recommend storing it in three hierarchical directories: *cloth, cloth_mask, and pattren*. cloth is the clothing image, cloth_mask is the mask image of the clothing image, and pattern is the textile pattern image corresponding to the clothing image. 
