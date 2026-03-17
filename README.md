@@ -120,7 +120,7 @@ python -u main.py \
 ---
 
 ## 🎨 Inference
-You can use our provided weights for [inference] (https://huggingface.co/hucegon/slddm-tpg/upload/main) (the model is still undergoing iterations, and any future updates will be released promptly). To generate patterns from test clothing images, run the `test.py` script. Alternatively, just run `bash test.sh`.
+You can use our provided weights for [inference](https://huggingface.co/hucegon/slddm-tpg/upload/main) (the model is still undergoing iterations, and any future updates will be released promptly). To generate patterns from test clothing images, run the `test.py` script. Alternatively, just run `bash test.sh`.
 
 ```bash
 python test.py \
