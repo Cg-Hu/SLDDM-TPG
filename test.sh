@@ -1,0 +1,11 @@
+python test.py --gpu_id 0 \
+--ddim_steps 50 \
+--outdir /nfs5/hcg/datasets/dci-vton-gen/8_slddm_tpg \
+--config config/slddmtpg512.yaml \
+--dataroot /nfs5/hcg/datasets/CTP-HD \
+--ckpt /nfs5/hcg/repository/sim_diff_diffusion_106_ldn/logs/vipa-109/2025-01-07T14:24:48_viton512occupystart_sdd.ckpt/checkpoints/last.ckpt \
+--n_samples 4 \
+--seed 23 \
+--scale 1 \
+--H 512 \
+--W 512 \

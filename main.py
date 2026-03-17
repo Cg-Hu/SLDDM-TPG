@@ -4,23 +4,22 @@ import time
 import torch
 import torchvision
 import pytorch_lightning as pl
-
-sys.setrecursionlimit(10000)
+# sys.setrecursionlimit(10000)
 from packaging import version
 from omegaconf import OmegaConf
 from torch.utils.data import random_split, DataLoader, Dataset, Subset
 from functools import partial
 from PIL import Image
-
 from pytorch_lightning import seed_everything
 from pytorch_lightning.trainer import Trainer
 from pytorch_lightning.callbacks import ModelCheckpoint, Callback, LearningRateMonitor
 from pytorch_lightning.utilities.distributed import rank_zero_only
 from pytorch_lightning.utilities import rank_zero_info
-
-from ldm.util import instantiate_from_config
-from ldm.data.base import Txt2ImgIterableBaseDataset
 import socket
+
+from sldm.util import instantiate_from_config
+from sldm.data.base import Txt2ImgIterableBaseDataset
+
 # os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 HOME_DIR = os.path.expanduser("~")
 import socket
@@ -78,7 +77,7 @@ def get_parser(**parser_kwargs):
         metavar="base_config.yaml",
         help="paths to base configs. Loaded from left-to-right. "
              "Parameters can be overwritten or added with command-line options of the form `--key value`.",
-        default=["./configs/slddm512.yaml"],
+        default=["./configs/slddmtpg512.yaml"],
     )
     parser.add_argument(
         "-t",
@@ -129,14 +128,14 @@ def get_parser(**parser_kwargs):
         "-l",
         "--logdir",
         type=str,
-        default=f"{HOME_DIR}/SLDDM-TPG/logs/{SERVICE_ID}",
+        default=f"{HOME_DIR}/cloth_pattern/SLDDM-TPG/logs/{SERVICE_ID}",
         help="directory for logging dat shit",
     )
     parser.add_argument(
         "--pretrained_model",
         type=str,
-        # default="",
-        default=f"/nfs5/hcg/repository/params/sim_diff_clothpattern/start_sdd.ckpt",
+        default="/nfs5/hcg/repository/params/dci_vt/model.ckpt",
+        # default=f"/nfs5/hcg/repository/params/sim_diff_clothpattern/start_sdd.ckpt",
         help="path to pretrained model",
     )
     parser.add_argument(
@@ -294,8 +293,10 @@ class SetupCallback(Callback):
                 save_lora_weight(trainer.model, path=ckpt_path)
             else:
                 ckpt_path = os.path.join(self.ckptdir, "last.ckpt")
-                # ldn_state_dict = {k: v for k, v in model.state_dict().items() if 'ldn' in k}
+                # ldn_state_dict = {k: v for k, v in model.state_dict().items() if 'cpsd' in k}
                 # torch.save(ldn_state_dict, ckpt_path)
+
+                print('=============on_keyboard_interrupt: 正在存储模型=============')
                 trainer.save_checkpoint(ckpt_path)
 
     def on_pretrain_routine_start(self, trainer, pl_module):
@@ -541,35 +542,17 @@ if __name__ == "__main__":
 
     # model
     model = instantiate_from_config(config.model)
-    # 这样写有问题
-    # with open('parameter_names.txt', 'w') as f:
-    #     for name, param in model.named_parameters():
-    #         f.write(name + '\n')  # 写入每个参数名称
-        # if 'attn_ldn' in name or 'norm_ldn' in name or 'pro_out_ldn' in name:
-        #     param.requires_grad = True
-        # else:
-        #     param.requires_grad = False
-    # exit()
-    # 同时优化两组CA层
+    # for param in model.parameters():
+    #     param.requires_grad = True
+
+    # Optimize only newly added attn; try handling more options. Generally, full fine-tuning yields the best results.
+    # If resources are insufficient, try LoRa.
     for name, param in model.named_parameters():
-        if 'diffusion_model' in name:
-            if 'attn_ldn' in name or 'norm_ldn' in name:
-                param.requires_grad = True
-            else:
-                param.requires_grad = False
-        elif 'learnable_vector' in name:
-                param.requires_grad = True  
-        elif 'proj_out_ldn.weight' == name:
+        if 'cpsd' in name:
             param.requires_grad = True
-        elif 'proj_out_ldn.bias' == name:
-            param.requires_grad = True
-        # elif 'proj_out.weight' == name:
-        #     param.requires_grad = True
-        # elif 'proj_out.bias' == name:
-        #     param.requires_grad = True
         else:
-            param.requires_grad = False  
-    
+            param.requires_grad = False
+            
     if not opt.resume:
         if opt.train_from_scratch:
             ckpt_file = torch.load(opt.pretrained_model, map_location='cpu')['state_dict']
@@ -578,7 +561,7 @@ if __name__ == "__main__":
             print("Train from scratch!")
         else:
             print("===========Load ckpt only state_dict==============")
-            model.load_state_dict(torch.load(opt.pretrained_model, map_location='cpu')['state_dict'], strict=False)
+            # model.load_state_dict(torch.load(opt.pretrained_model, map_location='cpu')['state_dict'], strict=False)
             print("Load Stable Diffusion v1-5!")
 
     # lora
@@ -631,18 +614,6 @@ if __name__ == "__main__":
             "every_n_epochs": 5 # 每5个epoch进行保存
         }
     }
-
-    # 修改回调部分，使用自定义的 checkpoint callback
-    # default_modelckpt_cfg = {
-    #     "target": "main.CustomModelCheckpoint",
-    #     "params": {
-    #         "dirpath": ckptdir,
-    #         "filename": "{epoch:06}",
-    #         "verbose": True,
-    #         "save_last": True,
-    #         "every_n_epochs": 5,
-    #     }
-    # }
 
     if hasattr(model, "monitor"):
         print(f"Monitoring {model.monitor} as checkpoint metric.")
@@ -774,8 +745,9 @@ if __name__ == "__main__":
         if trainer.global_rank == 0:
             print("Summoning checkpoint.")
             ckpt_path = os.path.join(ckptdir, "last.ckpt")
-            # ldn_state_dict = {k: v for k, v in model.state_dict().items() if 'ldn' in k}
+            # ldn_state_dict = {k: v for k, v in model.state_dict().items() if 'cpsd' in k}
             # torch.save(ldn_state_dict, ckpt_path)
+            print("=================melk正在存储模型=================")
             trainer.save_checkpoint(ckpt_path, weights_only=False)
 
     def divein(*args, **kwargs):

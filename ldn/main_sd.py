@@ -32,7 +32,6 @@ from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 import heapq  # 用于追踪最佳权重
 from cloth_pattern_dataset import ClothPatternDataset
-# os.environ['CUDA_VISIBLE_DEVICES'] = '0,1,2,3'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0,1'
 
 from datetime import datetime, timedelta
@@ -183,7 +182,7 @@ def main_worker(gpu, ngpus_per_node, args):
         time_delta = timedelta(hours=8)
 
         now = (datetime.now() + time_delta).strftime("%Y-%m-%dT%H:%M:%S") + "ckpt_epoch87"
-        root = os.path.join(f"home/hcg/cloth_pattern/Representation/cpsd/logs_sd", now)
+        root = os.path.join(f"logs", now)
         os.makedirs(root, exist_ok=True)
         log_dir = os.path.join(root, "tf")
         save_path = os.path.join(root, "ckpt")

@@ -1,53 +1,99 @@
-# **SLDDM-TPG: Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation**
+# 👕 SLDDM-TPG: Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation
 
-## **Framework**
-Our method targets generation of pattern images from clothing images (TPG) and consists of two stages: (1) a latent disentangled network (LDN); (2) a semi-supervised latent diffusion model (S-LDM).
-<div align="center">
-  <img src="./assets/framework.jpg" alt="framework" width="70%">
-</div>
+![Python >= 3.8](https://img.shields.io/badge/Python->=3.8-blue.svg)
+![PyTorch](https://img.shields.io/badge/PyTorch-Framework-orange.svg)
 
-                         
+> **Official Implementation of the paper:** "Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation"
 
+## 📖 Overview
 
+Our method targets high-quality textile **pattern generation from clothing images (TPG)**. We propose a semi-supervised framework consisting of two main stages:
+1. **LDN (Latent Disentangled Network):** Extracts disentangled representation features.
+2. **S-LDM (Semi-supervised Latent Diffusion Model):** Generates high-fidelity pattern images guided by the extracted features.
 
-## **Installation**
+### Generation Results
+| Framework | Generation Results |
+| :---: | :---: |
+| <img src="./assets/framework.jpg" alt="framework" width="100%"> | <img src="./assets/effect.jpg" alt="effect" width="100%"> |
 
-**Create conda environment**
+---
 
+## 📁 Project Structure
+
+```text
+SLDDM-TPG/
+├── configs/            # Config files for model training & inference (e.g., slddm512.yaml)
+├── ldm/                # Core Latent Diffusion Model files, data loaders, and modules
+├── ldn/                # Stage 1: Latent Disentangled Network source code
+├── src/                # Third-party dependencies (taming-transformers, clip, etc.)
+├── assets/             # Images for README
+├── main.py             # Training script for Stage 2 (S-LDM)
+├── test.py             # Inference script
+├── test.sh             # Shell script for easy testing
+└── environment.yaml    # Conda environment configuration
 ```
+
+---
+
+## 🛠️ Environment Setup
+
+We recommend using Conda to set up the environment easily:
+
+```bash
 conda env create -f environment.yaml
 conda activate slddm
 ```
 
-## **Usage**
+---
 
-### **Download Pretrained Models**
+## 🗄️ Dataset Preparation
 
-We use stable-diffusion-v1-5 as our backbone and you can download the public weights.
+### 1. Download
+* **VITON-HD:** Publicly available [here](https://github.com/shadow2496/VITON-HD).
+* **CTP-HD (Our Dataset):** Contains paired *clothing <-> textile pattern* images. You can see some cases in the `assets/cases` floder.
 
-We use SimSiam (original model: resnet18, is public) as our LDN's SCM model, and the remaining modules are trained from weight initialization.
+### 2. Directory Structure
+Please organize the downloaded dataset following the hierarchical structure below. Ensure you have `train.txt` and `test.txt` containing the image filenames.
 
-### **Download the Dataset**
+```text
+<dataroot_path>/ (e.g., /home/dataset/CTP-HD/)
+├── cloth/                 # Original clothing images (e.g., .jpg or .png)
+├── cloth_mask/            # Corresponding clothing masks 
+├── pattern/               # Target textile pattern images 
+├── train.txt              # List of training image filenames (e.g., '0001.jpg')
+└── test.txt               # List of testing image filenames
+```
 
-Our CTP-HD dataset will be made public soon. Some cases are shown below.
 <div align="center">
-  <img src="assets/CTP-HD.jpg" alt="framework" width="50%">
+  <img src="assets/CTP-HD.jpg" alt="CTP-HD Dataset" width="60%">
 </div>
-VITON-HD data is publicly available and you can obtain and download it.
 
-For the downloaded data, we recommend storing it in three hierarchical directories: *cloth, cloth_mask, and pattren*. cloth is the clothing image, cloth_mask is the mask image of the clothing image, and pattern is the textile pattern image corresponding to the clothing image. 
+---
 
-### **Training for Stage1: LDN**
+## 📦 Pretrained Weights Preparation
 
-You can train the LDN network by executing the following script. Here, `accumulate_steps` means accumulating 8 batches of gradients before back propagation to simulate the effect of large batch training.
+Before training or inference, prepare the necessary pretrained weights. Stable Diffusion v1.5:** Download the SD v1.5 weights (e.g., `v1-5-pruned-emaonly.ckpt`) from [here](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5/tree/main). Recommended Weights Placement:
+```text
+SLDDM-TPG/
+└── pretrained_models/
+    ├── stable-diffusion-v1-5.ckpt       # For Stage 2 initialization
+    └── ldn_stage1_best.pth.tar          # (After you train Stage 1)
+```
 
-```python
-CUDA_VISIBLE_DEVICES=<set usable cuda index, such as 0,1> python main_sd.py \
+---
+
+## 🚀 Training
+
+### Stage 1: Latent Disentangled Network (LDN)
+
+Navigate to the `ldn/` directory or run the LDN training script. The `--accumulate_steps 8` simulates a larger batch size by accumulating gradients.
+
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python ldn/main_sd.py \
   --dist-url 'tcp://localhost:12356' \
   --multiprocessing-distributed \
   --world-size 2 \
   --rank 0 \
-  --resume <firstly train, please set to None>
   --scm-epochs 100 \
   --epochs 200 \
   --weight-decay 1e-3 \
@@ -56,35 +102,41 @@ CUDA_VISIBLE_DEVICES=<set usable cuda index, such as 0,1> python main_sd.py \
   --fix-pred-lr \
   --batch-size 32 \
   --accumulate_steps 8 \
-  <add your dataroot_path, such as /home/name/ctp_hd_data>
+  <path_to_your_dataset> # e.g., /dataset/CTP-HD
 ```
 
-### **Training for Stage2: S-LDM**
+### Stage 2: Semi-supervised Latent Diffusion Model (S-LDM)
 
-You can set trainer-related parameters in `SLDDM-TPG/configs/slddm512.yaml`, modify `gpus` to indicate the GPU number you use, and the code supports distributed training. 
+Adjust Lightning Trainer parameters inside `configs/slddm512.yaml` (e.g., GPUs to use). This script fully supports Distributed Data Parallel (DDP).
 
-```python
+```bash
 python -u main.py \
-	--logdir logs/train_106 \
-	--pretrained_model <set the downloaded stable-diffusion-v1-5 path> \
-	--base config/slddm512.yaml \
-	--scale_lr False
+    --logdir logs/train_slddm \
+    --pretrained_model pretrained_models/stable-diffusion-v1-5.ckpt \
+    --base configs/slddm512.yaml \
+    --scale_lr False
 ```
 
-### **Run Inference**
+---
 
-Inference can adjust the sampling steps of DDIM. You can use the following script to perform inference:
+## 🎨 Inference
+You can use our provided weights for inference (the model is still undergoing iterations, and any future updates will be released promptly). To generate patterns from test clothing images, run the `test.py` script. Alternatively, just run `bash test.sh`.
 
-```python
-python test.py --gpu_id 0 \
---ddim_steps 100 \
---outdir <The directory where the generated results are stored> \
---config config/slddm512.yaml \
---dataroot <Directory of test clothing images and masks> \
---ckpt <Directory of ckpt obtained through training>
---n_samples 4 \
---seed 23 \
---scale 1 \
---H 512 \
---W 512 \
+```bash
+python test.py \
+    --gpu_id 0 \
+    --ddim_steps 50 \
+    --outdir results/generated_patterns \
+    --config configs/slddm512.yaml \
+    --dataroot <path_to_your_test_dataset> \
+    --ckpt <path_to_trained_slddm_checkpoint.ckpt> \
+    --n_samples 4 \
+    --seed 23 \
+    --scale 7.5 \
+    --H 512 \
+    --W 512
 ```
+
+> **Tips:** 
+> - You can increase `<ddim_steps>` (e.g., to 100) for potentially better generation quality at the cost of inference speed.
+> - You can adjust the `--scale` parameter to control the condition strength, preventing image overexposure or distortion caused by excessively strong guidance.

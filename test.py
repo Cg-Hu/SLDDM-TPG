@@ -15,13 +15,14 @@ from pytorch_lightning import seed_everything
 from torch import autocast
 from contextlib import contextmanager, nullcontext
 import torchvision
-
-from ldm.data.ctp_dataset import CTPDataset
-from ldm.resizer import Resizer
-from ldm.util import instantiate_from_config
-from ldm.models.diffusion.ddim import DDIMSampler
-from ldm.models.diffusion.plms import PLMSSampler
 from torchvision.transforms import Resize
+
+from sldm.resizer import Resizer
+from sldm.util import instantiate_from_config
+from sldm.models.diffusion.ddim import DDIMSampler
+from sldm.models.diffusion.plms import PLMSSampler
+from sldm.data.ctp_dataset_predict import CTPDataset
+
 
 def chunk(it, size):
     it = iter(it)
@@ -211,7 +212,7 @@ def main():
     parser.add_argument(
         "--scale",
         type=float,
-        default=7.5,
+        default=1,
         help="unconditional guidance scale: eps = eps(x, empty) + scale * (eps(x, cond) - eps(x, empty))",
     )
     parser.add_argument(
@@ -256,12 +257,7 @@ def main():
     config = OmegaConf.load(f"{opt.config}")
     version = opt.config.split('/')[-1].split('.')[0]
     model = load_model_from_config(config, f"{opt.ckpt}")
-    # torch.save(model.state_dict, 'attn.pth')
-    # with open('weight_shapes.txt', 'w') as f:
-    #     for key, value in model.state_dict().items():
-    #         if isinstance(value, torch.Tensor):
-    #             f.write(f"{key} {value.shape}\n")
-    # model = model.to(device)
+    
     mode = 'test'
     dataset = CTPDataset(opt.dataroot, opt.H, mode=mode)
     loader = DataLoader(dataset, batch_size=opt.n_samples, shuffle=False, num_workers=4, pin_memory=True)
@@ -290,8 +286,6 @@ def main():
                     inpaint_image = data['inpaint_image']
                     ref_tensor = data['ref_imgs']
                     feat_tensor = inpaint_image
-                    image_tensor = data['GT']
-                    # filename = data['file_name']
 
                     test_model_kwargs = {}
                     test_model_kwargs['inpaint_mask'] = mask_tensor.to(device)
@@ -303,32 +297,27 @@ def main():
                     if opt.scale != 1.0:
                         uc = model.learnable_vector
                         uc = uc.repeat(ref_tensor.size(0), 1, 1)
-                    c = model.get_learned_conditioning(ref_tensor.to(torch.float16)) # 这边可以更改参考的条件
-                    c = model.proj_out(c)  # torch.Size([2, 1, 768])
-
-                    # z_gt = model.encode_first_stage(image_tensor.to(device))
-                    # z_gt = model.get_first_stage_encoding(z_gt).detach()
+                    c = model.get_learned_conditioning(ref_tensor.to(torch.float16)) 
+                    c = model.proj_out(c) 
 
                     z_inpaint = model.encode_first_stage(test_model_kwargs['inpaint_image'])
                     z_inpaint, z_vae = model.get_first_stage_encoding(z_inpaint, cp=True)
-                    z_inpaint = z_inpaint.detach() # 采样
+                    z_inpaint = z_inpaint.detach() 
         
                     print(z_vae.shape)
                     test_model_kwargs['inpaint_image'] = z_inpaint
                     test_model_kwargs['inpaint_mask'] = Resize([z_inpaint.shape[-2], z_inpaint.shape[-1]])(
                         test_model_kwargs['inpaint_mask'])
 
-                    warp_feat = model.encode_first_stage(feat_tensor) # 得到均值，方差，logvar等值
+                    warp_feat = model.encode_first_stage(feat_tensor) 
                     warp_feat = model.get_first_stage_encoding(warp_feat).detach()
 
                     ts = torch.full((1,), 999, device=device, dtype=torch.long)
-                    start_code = model.q_sample(warp_feat, ts) # 噪声是输入图像的加噪t时间步的版本
-                    # x_simz, x_simp, x_diff, x_affine, x_hid
-                    c_sim, c_sim_p, c_diff, c_affine, c_hid = model.cpsd_stage_model(z_vae)
+                    start_code = model.q_sample(warp_feat, ts) 
+                    c_sim, c_sim_p, c_diff, c_affine, c_hid = model.ldn_stage_model(z_vae)
                     c_sim_pro = c_sim.unsqueeze(1)
                     c_diff_pro = c_diff.unsqueeze(1)
                     c_affine_pro = c_affine.unsqueeze(1)
-                    # 方便的做法是直接使用同一个映射头进行映射，且不进行前部的训练
                     c_sim_pro = model.proj_out_cpsd(c_sim_pro)
                     c_diff_pro = model.proj_out_cpsd(c_diff_pro)
                     c_affine_pro = model.proj_out_cpsd(c_affine_pro)
@@ -353,8 +342,6 @@ def main():
 
                     x_checked_image = x_samples_ddim
                     x_checked_image_torch = torch.from_numpy(x_checked_image).permute(0, 3, 1, 2)
-                    x_source = torch.clamp((image_tensor + 1.0) / 2.0, min=0.0, max=1.0)
-                    # x_result = x_checked_image_torch * (1 - mask_tensor) + mask_tensor * x_source # mask中0的部分是需要生产的，1的部分是需要保留的
                     x_result = x_checked_image_torch
 
                     resize = transforms.Resize((opt.H, int(opt.H / 256 * 192)))
@@ -366,13 +353,12 @@ def main():
 
                         for i, x_sample in enumerate(x_result):
                             filename = data['file_name'][i]
-                            # filename = data['file_name']
                             save_x = resize(x_sample)
                             save_x = 255. * rearrange(save_x.cpu().numpy(), 'c h w -> h w c')
                             img = Image.fromarray(save_x.astype(np.uint8))
                             img.save(os.path.join(result_path, filename))
 
-    print(f"Your samples are ready and waiting for you here: \n{outpath} \n"
+    print(f"\n \n Your samples are ready and waiting for you here: \n{outpath} \n"
           f" \nEnjoy.")
 
 

@@ -2,11 +2,12 @@ import torch
 import pytorch_lightning as pl
 import torch.nn.functional as F
 import argparse
-from model import Encoder
-from distributions import DiagonalGaussianDistribution
-
-from auto_util import instantiate_from_config
 from omegaconf import OmegaConf
+
+from first_autoencoder.model import Encoder
+from first_autoencoder.distributions import DiagonalGaussianDistribution
+from first_autoencoder.auto_util import instantiate_from_config
+
 
 
 
