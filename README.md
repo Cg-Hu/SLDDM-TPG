@@ -2,8 +2,9 @@
 
 ![Python >= 3.8](https://img.shields.io/badge/Python->=3.8-blue.svg)
 ![PyTorch](https://img.shields.io/badge/PyTorch-Framework-orange.svg)
-
-> **Official Implementation of the paper:** "Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation"
+[![arXiv](https://img.shields.io/badge/arXiv-2603.16747-b31b1b.svg)](https://arxiv.org/abs/2603.16747)
+<!-- 
+> **Official Implementation of the paper:** "Semi-supervised Latent Disentangled Diffusion Model for Textile Pattern Generation" -->
 
 ## 📖 Overview
 
@@ -49,7 +50,7 @@ conda activate slddm
 ## 🗄️ Dataset Preparation
 
 ### 1. Download
-* **VITON-HD:** Publicly available [here](https://github.com/shadow2496/VITON-HD).
+* **VITON-HD:** Publicly available [here](https://github.com/shadow24969/VITON-HD).
 * **CTP-HD (Our Dataset):** Contains paired *clothing <-> textile pattern* images. You can see some cases in the `assets/cases` floder.
 
 ### 2. Directory Structure
@@ -120,7 +121,9 @@ python -u main.py \
 ---
 
 ## 🎨 Inference
-You can use our provided weights for [inference](https://huggingface.co/hucegon/slddm-tpg/upload/main) (the model is still undergoing iterations, and any future updates will be released promptly). To generate patterns from test clothing images, run the `test.py` script. Alternatively, just run `bash test.sh`.
+To generate patterns from test clothing images, run the `test.py` script. Alternatively, just run `bash test.sh`.
+
+<!-- You can use our provided weights for [inference](https://huggingface.co/hucegon/slddm-tpg/upload/main) (the model is still undergoing iterations, and any future updates will be released promptly).  -->
 
 ```bash
 python test.py \
